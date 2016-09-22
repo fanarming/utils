@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>滚动响应</title>
+	<style>
+		* { 
+			margin: 0;
+			padding: 0;
+			text-decoration: none;	
+			overflow-x: hidden;							
+		}
+
+		#wrapper {			
+			
+		}		
+
+		
+	</style>
+	<script src="../js/jquery.min.js"></script>	
+	<script>
+		$(function(){	
+			$('#wrapper').height($(window).height());
+
+			var tagId = "wrapper",
+		    	startX = 0, startY = 0,
+		        obj = document.getElementById(tagId),
+		        direct = "none";
+
+		    obj.addEventListener('touchstart', function(event) { //jquer方法换成on监听事件
+		        // 如果这个元素的位置内只有一个手指的话
+		       // if (event.targetTouches.length == 1) {
+		            var touch = event.targetTouches[0];
+	            
+		            startX = touch.pageX;
+		            startY = touch.pageY;		            
+		       // }
+		    }, false);
+
+		    obj.addEventListener('touchmove', function(event) {
+		        // 如果这个元素的位置内只有一个手指的话
+		        //if (event.targetTouches.length == 1) {
+		            var touch = event.targetTouches[0];
+		            var spanX = touch.pageX - startX;
+		            var spanY = touch.pageY - startY;
+		            
+		            if (Math.abs(spanX) > Math.abs(spanY)) {
+		                //水平方向
+		                if (spanX > 0) { //可以设置距离
+		                    direct = "right";//向右
+		                    
+		                    //do right function
+		                } else {
+		                    direct = "left";//向左
+		                    //do left function
+		                    
+		                }
+		            } else {
+		                //垂直方向
+		                if (spanY > 0) {
+		                    direct = "down";//向下
+		                    
+		                    //do down function
+		                } else {
+		                    direct = "up";//向上
+		                    
+		                    //do up function
+		                }
+		            }
+		           
+		       // }
+		    }, false);
+		    
+		    
+		    obj.addEventListener('touchend', function(event) {
+		        // 如果这个元素的位置内只有一个手指的话
+		       // if (event.targetTouches.length == 1) {
+		       //     var touch = event.targetTouches[0];		           
+		       // }
+		       if(direct === "right"){ //===类型不同就已经为false了，而==会先转换成相同类型的值再比较
+console.log(direct);		    
+					//事件响应函数   	
+			   } else if(direct === "left"){
+console.log(direct);
+					//事件响应函数   	
+			   } else if(direct === "up"){
+console.log(direct);
+					//事件响应函数   	
+			   } else if(direct === "down"){
+console.log(direct);
+					//事件响应函数   	
+			   } 
+
+		    }, false);
+		});
+		
+	</script>	
+</head>
+<body>
+	<div id="wrapper">
+		1
+	</div>	
+</body>
+</html>

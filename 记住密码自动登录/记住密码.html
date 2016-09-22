@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>记住密码自动登录</title>
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<style>
+		* { 
+			margin: 0;
+			padding: 0;
+			text-decoration: none;	
+			overflow-x: hidden;							
+		}
+
+		body {
+		    padding-top: 40px;
+		    padding-bottom: 40px;
+		    background-color: #eee;
+		}
+
+		.login-form {
+		    max-width: 330px;
+			padding: 15px;
+			margin: 0 auto;
+		}
+	</style>	
+</head>
+<body>
+	<section class="container">
+		<form class="login-form">
+			<div class="form-group">
+		    	<label for="username">用户名</label>
+		    	<input type="email" class="form-control" id="username" placeholder="Email">
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="password">密码</label>
+		    	<input type="password" class="form-control" id="password" placeholder="password">
+		  	</div>
+		  	<div class="checkbox">
+			    <label>
+			      <input type="checkbox"> Remember me
+			    </label>
+			</div>
+			<button id="submit-btn" type="submit" class="btn btn-primary">Sign in</button>
+		</form>
+	</section>
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script>
+		$(function(){
+			//var remStorage = [];
+
+			/*localStorage.remStorage = 
+				{
+					'name': 'arming',
+					'password': 123456
+				}/*,
+				{
+					name: 'abc',
+					password: '456456'
+				}
+			];*/
+
+			//console.log(localStorage.remStorage);
+
+			//localStorage和sessionStorage只能存储字符串类型的对象
+
+			$('#submit-btn').on('click',function(){
+				var storage = window.localStorage;
+
+				storage['username'] = $('#username').val();
+				storage['userpawd'] = $('#password').val();
+
+				console.log(storage);
+				return false;
+			});
+		});
+	</script>
+</body>
+</html>

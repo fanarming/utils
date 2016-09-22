@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>获取时间</title>
+	<style>
+		* { 
+			margin: 0;
+			padding: 0;
+			text-decoration: none;									
+		}			
+
+	</style>		
+</head>
+<body>
+	<div id="time"></div>
+
+	<script>		
+		function time(){
+         	var oDate = new Date(),
+	         	year = oDate.getFullYear(),
+	         	month = oDate.getMonth()+1,
+	         	day = oDate.getDate(),
+	         	hours = oDate.getHours(),
+	         	minute = oDate.getMinutes(),
+	         	seconds = oDate.getSeconds(),
+	         	time = null,
+	         	week = new Array(7);
+
+	        week[0] = '星期天';
+	        week[1] = '星期一';
+	        week[2] = '星期二';
+	        week[3] = '星期三';
+	        week[4] = '星期四';
+	        week[5] = '星期五';
+	        week[6] = '星期六';
+
+	        var weeks = week[oDate.getDay()],
+	        	data = document.getElementById('time');
+
+	        data.innerHTML = year + '年' + month + '月' + day + '日' + '  ' + weeks + '  ' + fillZero(hours) + ':' + fillZero(minute) + ':' + fillZero(seconds);
+
+	        function fillZero(n){
+	            if (n < 10){
+	                return '0'+n
+	            }
+	            else {
+	                return n
+	            }
+	        }
+
+	    }
+
+	    time();
+
+	    setInterval(time,1000);
+
+	</script>
+</body>
+</html>

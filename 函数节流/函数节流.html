@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>函数节流</title>
+	<style>
+	*{margin: 0;padding: 0;text-decoration: none;}
+	.container{height:1000px;}
+	
+	</style>	
+	<script src="../js/jquery.min.js"></script>
+	<script>
+
+		var timer = null;		
+
+		function throttle() { 
+		//函数节流:是让一个函数无法在很短的时间间隔内连续调用，当上一次函数执行后过了规定的时间间隔，才能进行下一次该函数的调用
+			//不管存不存在flag这个延时执行函数，先清除
+	        clearTimeout(timer);
+	         		    
+		    timer = setTimeout(function () {   //利用计时器进行函数节流/稀释
+		        //添加onscroll事件处理
+		        console.log('onscroll');
+		    }, 1000);
+		};
+
+
+		function debounce(fn,delay){  //函数去抖:让一个函数在一定间隔内没有被调用时，才开始执行被调用方法
+            var timer = null;
+
+            return function(){     //利用闭包原理
+                var context = this, 
+                	args = arguments;
+console.log(args);
+                clearTimeout(timer);
+
+                timer = setTimeout(function(){
+                    fn.apply(context,args);
+                }, delay);
+            }
+        }; 
+
+        function mylog(){
+        	console.log("hahha");
+        };
+
+        //像鼠标经过，滚动条，窗口缩放，键盘输入（搜索）以及射击游戏等需要进行dom操作优化的
+		window.onscroll = function(){
+			throttle();//也可封装成构造函数类
+		};
+
+		window.onresize = debounce(mylog, 1000);  //因为返回函数句柄，不用包装函数了
+		
+	</script>
+</head>
+<body >
+<div class ="container"></div>
+</body>
+</html>

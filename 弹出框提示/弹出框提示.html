@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>提示窗口</title>
+	<link rel="stylesheet" href="./tips.css">
+	<style>
+		* { 
+			margin: 0;
+			padding: 0;
+			text-decoration: none;									
+		}
+
+		#wrapper {			
+			
+		}		
+
+		
+	</style>		
+</head>
+<body>
+	<div id="wrapper">
+		<input class="normal" type="button" value="额恩恩">
+		<input class="success" type="button" value="哈哈哈">
+	</div>	
+	<script src="../js/jquery.min.js"></script>	
+	<script src="./tips.js"></script>	
+	<script>
+		$(function(){
+			$('.normal').on('click', function(){
+				$.NormalMsg('我知道了，哈哈哈');
+			});
+
+			$('.success').on('click', function(){
+				$.SuccessMsg('正确了，哈哈哈');
+			});
+		});		
+	</script>
+</body>
+</html>

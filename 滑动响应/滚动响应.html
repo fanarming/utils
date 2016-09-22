@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>滑动响应</title>
+	<style>
+		* { 
+			margin: 0;
+			padding: 0;
+			text-decoration: none;	
+			overflow-x: hidden;							
+		}
+
+		#wrapper {
+			margin: 50px auto;
+			width: 500px;
+			height: 1000px;
+		}		
+
+		
+	</style>
+	<script src="../js/jquery.min.js"></script>	
+	<script>
+		$(function(){					
+			//滚动条滚动事件
+			scrollFuc(function(direction) { console.log(direction) });    
+			function scrollFuc( fn ) {
+			    var beforeScrollTop = document.body.scrollTop,
+			        fn = fn || function() {},
+			        timer = null;
+
+			    window.addEventListener("scroll", function() { //函数节流
+			        var afterScrollTop = document.body.scrollTop,
+			            delta = afterScrollTop - beforeScrollTop;			        
+
+			        if (timer) {
+				        clearTimeout(timer);
+				    }
+
+				    timer = setTimeout(function () {
+				        if( delta === 0 ) return false;
+				        
+				        fn( delta > 0 ? "down" : "up" );		        	
+				       	        
+				        beforeScrollTop = afterScrollTop;
+				    }, 1000);
+
+				    console.log(timer);
+			    }, false);
+			}
+
+			//window.onmousewheel = document.onmousewheel = scrollFuc(function(direction) { console.log(direction) });
+		});
+		
+	</script>	
+</head>
+<body>
+	<div id="wrapper">
+		
+	</div>	
+</body>
+</html>

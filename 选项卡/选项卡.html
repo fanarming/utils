@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type"content="text/html;charset=utf-8"/>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript">
+;(function($,window,document,undefined){
+	
+	var MyTab = function(element,options){
+		this.$element = element;
+		this.defaults = {
+			container : '',
+			activeTabName : null
+		};
+		this.options = $.extend({},this.defaults,options);	
+		//debugger;   设置断点
+		
+	};
+
+
+	MyTab.prototype = {
+		init: function(){			
+			var $element = $(this.$element),
+				$container = $(this.options.container),
+				activeName = this.options.activeTabName;			
+
+			$element.on('click','li',function(){
+				var $this = $(this);
+				var c = $this.data("tab");
+				$element.trigger('tabChange',c);
+			});
+
+			$element.on('tabChange',function(e,tabName){
+
+				$element.find('li').removeClass('cur');
+				$element.find('>[data-tab='+tabName+']').addClass("cur");
+				$container.find('>[data-tab]').removeClass('on');
+				$container.find('>[data-tab='+tabName+']').addClass("on");
+			});	
+
+			if(activeName == null){
+
+				$element.find('li').eq(0).trigger('click');
+			}else{
+
+				$element.trigger('tabChange',activeName);  //注意自定义事件先定义才能执行
+			}	
+		}
+	};
+
+
+	$.fn.myTab = function(options){
+		var mytab = new MyTab(this, options);
+
+		return mytab.init();
+	};
+})(jQuery,window,document);
+</script>
+<script type="text/javascript">
+$(function(){
+	$('#tab').myTab({container:'#tabContent', activeTabName: "tab2"});
+})
+</script>
+
+<style>
+.tabContent div{margin:0;padding:0;width:184px;height:200px;border:1px solid #ccc;display:none;}
+.tab{margin:0;padding:0;list-style:none;width:200px;overflow:hidden;}
+.tab li{float:left;width:60px;height:30px;background:#ccc;color:#fff;border:1px solid red; text-align:center;line-height:30px;cursor:pointer; }
+.tab li.cur{background:blue;}
+div.on{display:block;}
+</style>
+</head>
+<body>
+	<ul id="tab" class="tab">
+       <li data-tab="tab1">最新</li>
+       <li data-tab="tab2">热门</li>
+       <li data-tab="tab3">新闻</li>
+	</ul>
+	<div id="tabContent" class="tabContent">
+		<div data-tab="tab1">11</div>
+		<div data-tab="tab2">22</div>
+		<div data-tab="tab3">33</div>
+	</div>
+</body>
+</html>

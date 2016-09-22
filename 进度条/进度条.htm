@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>获取时间</title>
+	<style>
+		* { 
+			margin: 0;
+			padding: 0;
+			text-decoration: none;									
+		}
+
+		body {
+			font-family: "微软雅黑";
+		}
+		.circle {
+			width: 200px;
+			height: 200px;
+			position: absolute;
+			border-radius: 50%;
+			background: #0cc;
+		}
+		.pie_left, .pie_right {
+			width:200px; 
+			height:200px;
+			position: absolute;
+			top: 0;left: 0;
+		}
+		.left, .right {
+			width:200px; 
+			height:200px;
+			background:#00aacc;
+			border-radius: 50%;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		.pie_right, .right {
+			clip:rect(0,auto,auto,100px);
+		}
+		.pie_left, .left {
+			clip:rect(0,100px,auto,0);
+		}
+		.mask {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			left: 25px;
+			top: 25px;
+			background: #FFF;
+			position: absolute;
+			text-align: center;
+			line-height: 150px;
+			font-size: 20px;
+			font-weight: bold;
+			color: #00aacc;
+		}	
+
+		/*进度条*/
+		#progress{
+		    width: 50%; 
+		    height: 30px;
+		    border:1px solid #ccc;
+		    border-radius: 15px;
+		    margin: 50px 0 0 100px;
+		    overflow: hidden;
+		    box-shadow: 0 0 5px 0px #ddd inset;
+		}
+
+		#progress span {
+		    display: inline-block;
+		    width: 70%;
+		    height: 100%;
+		    line-height: 32px;
+		    background: #2989d8; /* Old browsers */
+		    background: -moz-linear-gradient(45deg, #2989d8 33%, #7db9e8 34%, #7db9e8 59%, #2989d8 60%); /* FF3.6+ */
+		    background: -webkit-gradient(linear, left bottom, right top, color-stop(33%,#2989d8), color-stop(34%,#7db9e8), color-stop(59%,#7db9e8), color-stop(60%,#2989d8)); /* Chrome,Safari4+ */
+		    background: -webkit-linear-gradient(45deg, #2989d8 33%,#7db9e8 34%,#7db9e8 59%,#2989d8 60%); /* Chrome10+,Safari5.1+ */
+		    background: -o-linear-gradient(45deg, #2989d8 33%,#7db9e8 34%,#7db9e8 59%,#2989d8 60%); /* Opera 11.10+ */
+		    background: -ms-linear-gradient(45deg, #2989d8 33%,#7db9e8 34%,#7db9e8 59%,#2989d8 60%); /* IE10+ */
+		    background: linear-gradient(45deg, #2989d8 33%,#7db9e8 34%,#7db9e8 59%,#2989d8 60%); /* W3C */
+		    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2989d8', endColorstr='#2989d8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+		    background-size: 60px 30px;
+		    text-align: center;
+		    color:#fff;
+		}	
+
+		/*订单进度条*/
+		#progressBar{
+		    width: 80%;
+		    height: 50px;
+		    position: relative;
+		    margin: 50px 0 0 100px;
+		}
+		#progressBar div{
+		    width: 100%;
+		    height: 10px;
+		    position: absolute;
+		    top:50%;
+		    left: 0;
+		    margin-top:-20px;
+		    border:1px solid #ddd;
+		    background: #ccc;
+		}
+		#progressBar div span{
+		    position: absolute;
+		    display: inline-block;
+		    background: green;
+		    height: 10px;
+		    width: 25%;
+		}
+		#progressBar>span{
+		    position: absolute;
+		    top:0;
+		    margin-top: -10px;
+		    width: 40px;
+		    height: 40px;
+		    border:2px solid #ddd;
+		    border-radius: 50%;
+		    background: green;
+		    margin-left: -20px;
+		    color:#fff;
+		}
+		#progressBar>span:nth-child(1){
+		    left: 0%;
+		}
+		#progressBar>span:nth-child(2){
+		    left: 25%;
+		    background:green;
+		}
+		#progressBar>span:nth-child(3){
+		    left: 50%;
+		    background:#ccc;
+		}
+		#progressBar>span:nth-child(4){
+		    left: 75%;
+		    background:#ccc;
+		}
+		#progressBar>span:nth-child(5){
+		    left: 100%;
+		    background:#ccc;
+		}	
+
+	</style>		
+</head>
+<body>
+	<div id="progress">
+	    <span>70%</span>
+	</div>
+
+	<div id="progressBar">
+	     <!-- 进度条 -->
+	     <div>
+	         <span></span>
+	     </div>
+	     <!-- 五个圆 -->
+	     <span></span>
+	     <span></span>
+	     <span></span>
+	     <span></span>
+	     <span></span>
+	</div>
+	<!--利用左右两部分相同的背景色，两部分各占一半，然后再将右边部分旋转一定角度[左右两部分的可见区域已定大小]-->
+	<div class="circle" style="left:100px">
+		<div class="pie_left"><div class="left"></div></div>
+		<div class="pie_right"><div class="right"></div></div>
+		<div class="mask"><span>10</span>%</div>
+	</div>	
+
+	<div class="spinner"><i></i></div>
+
+	<script src="../js/jquery.min.js"></script>
+	<script>	
+		$(function() {
+			$('.circle').each(function(index, el) {
+				var num = $(this).find('span').text() * 3.6;
+				if (num<=180) {
+					//$(this).find('.right').css('transform', "rotate(" + num + "deg)");					
+					$(this).find('.right').animate({'transform': "scale(1.2)"});					
+				} else {
+					$(this).find('.right').css('transform', "rotate(180deg)");
+					$(this).find('.left').css('transform', "rotate(" + (num - 180) + "deg)");
+				};
+			});
+
+		});
+	</script>
+</body>
+</html>

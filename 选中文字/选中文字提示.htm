@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>提示窗口</title>
+	<style>
+		* { 
+			margin: 0;
+			padding: 0;
+			text-decoration: none;									
+		}			
+
+		.img_sina_share{display:none; position:absolute; cursor:pointer;}
+	</style>		
+</head>
+<body>
+	<div id="wrapper">
+		在web页面上，我们也是可以实现类似的效果的：划词→显示提示→分享。这就是本文要展示的内容。
+	</div>	
+	<img id="imgSinaShare" class="img_sina_share" title="将选中内容分享到新浪微博" src="http://simg.sinajs.cn/blog7style/images/common/share.gif" style="display: none;left: 408px;top: 577px;">
+	<script>		
+		var eleImgShare = document.getElementById("imgSinaShare");
+
+		var $sinaMiniBlogShare = function(eleShare, eleContainer) {
+
+			var eleTitle = document.getElementsByTagName("title")[0];
+				eleContainer = eleContainer || document;
+
+			var funGetSelectTxt = function() {
+				var txt = "";
+				if(document.selection) {
+					txt = document.selection.createRange().text;	// IE
+				} else {
+					txt = document.getSelection();
+				}
+				return txt.toString();
+			};
+
+			eleContainer.onmouseup = function(e) {
+				e = e || window.event;
+				
+				var txt = funGetSelectTxt(), 
+					sh = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+				var left = (e.clientX - 40 < 0) ? e.clientX + 20 : e.clientX - 40, 
+					top = (e.clientY - 40 < 0) ? e.clientY + sh + 20 : e.clientY + sh - 40;
+
+				if (txt) {
+					eleShare.style.display = "inline";
+					eleShare.style.left = left + "px";
+					eleShare.style.top = top + "px";
+				} else {
+					eleShare.style.display = "none";
+				}
+			};
+
+			eleShare.onclick = function() {
+				var txt = funGetSelectTxt(), 
+					title = (eleTitle && eleTitle.innerHTML)? eleTitle.innerHTML : "未命名页面";
+
+				if (txt) { //进行相应操作
+					window.open('http://v.t.sina.com.cn/share/share.php?title=' + txt + '→来自页面"' + title + '"的文字片段&url=' + window.location.href);	
+				}
+			};
+		}(eleImgShare); //立即调用
+
+	</script>
+</body>
+</html>

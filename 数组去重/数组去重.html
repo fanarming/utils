@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>上下翻页</title>
+	<style>
+		* { 
+			margin: 0;
+			padding: 0;
+			text-decoration: none;								
+		}
+
+		.result {
+			width: 800px;
+			margin: 50px auto;
+		}
+	</style>
+	<script src="../js/jquery.min.js"></script>
+	<script>
+		$(function(){			
+			var arr = [1222, 'dsfa', 1231345, 'sdfasfa', 'dfasfa', 'dfasfa', 1231345, 1231345];
+
+			Array.prototype.result = function (){
+				var newArr = [],
+					hash = {};
+
+				for(var i = 0; i<this.length; i++) {
+					if(!hash[this[i]]) {
+						newArr.push(this[i]);
+						hash[this[i]] = true;
+					}
+				}
+
+				//return newArr;
+				$("#origion-len").text(arr.length);				
+				$("#origion-arr").text(arr);
+				$("#current-len").text(newArr.length);
+				$("#current-arr").text(newArr);
+			};
+
+			arr.result();
+			console.log(arr);
+		});
+	</script>
+</head>
+<body>	
+	<div class="result">
+		<p>原来的数组个数是：<span id="origion-len"></span></p>
+		<p>原来的数组是：<span id="origion-arr"></span></p>
+		<p>现在的数组个数是：<span id="current-len"></span></p>		
+		<p>现在的数组是：<span id="current-arr"></span></p>
+	</div>
+</body>
+</html>

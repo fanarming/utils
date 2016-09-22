@@ -1,0 +1,303 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type"content="text/html;charset=utf-8"/>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript">
+;(function($,window,document,undefined){
+        //需要设置为直接的名字
+        var pluginName = "perfectPager";
+        //默认配置项
+        var defaults = {
+                currentPage	: 1,
+		maxPage	: null,
+		selectCallback : function (activeNum) {},
+		refreshCallback : null
+        }
+        //插件类
+        function Plugin(element,options){
+
+                //拿到dom元素，获得对应jq对象，要$(element)
+                this.element = element;
+
+                //覆盖默认配置项
+                this.options = $.extend({},defaults,options);
+
+                //缓存配置项
+                this._defaults = defaults;
+
+                //缓存插件名字（并没神马用）
+                this._name = pluginName;
+				
+		//缓存本插件常用属性
+		this.$element = $(this.element);
+		this.currentPage =this.options.currentPage;
+		this.maxPage = this.options.maxPage;
+				
+                //调用初始函数
+                this.init();
+        }
+	//初始化
+        Plugin.prototype.init = function(){
+
+                //做你想做的事情
+		//1.更新操作按钮样式 单独抽出方法
+		//this.updateOper();
+
+		//2.绑定按钮操作
+		this.bindOper();
+
+		//3.更新input框
+		this.updateInput();
+
+		//4.绑定输入框相关事件
+		this.bindInput();
+        };
+	//更新按钮样式
+	Plugin.prototype.updateOper = function(){
+		this.$element.find('a').each(function(){
+			$this = $(this);
+			$this.removeClass($this.data('oper')+'-disabled');
+		});
+		if(this.currentPage == 1){
+			this.$element.find('a.page-first').addClass('page-first-disabled');
+			this.$element.find('a.page-prev').addClass('page-prev-disabled');
+		}
+		if(this.currentPage == this.maxPage){
+			this.$element.find('a.page-next').addClass('page-next-disabled');
+			this.$element.find('a.page-last').addClass('page-last-disabled');
+		}
+	};
+	//绑定按钮操作事件
+	Plugin.prototype.bindOper = function(){
+		var self = this;
+		//采用委托
+		this.$element.on('click','a',function(){
+			var $a = $(this);
+			var oper = $a.data('oper');
+			if($a.hasClass(oper+'-disabled')){
+				return;
+			}else{
+				switch(oper){
+					case 'page-first' : 
+						self.currentPage = 1;
+						break;
+					case 'page-prev' : 
+						self.currentPage--;
+						break;
+					case 'page-next' :
+						self.currentPage++;
+						break;
+					case 'page-last' : 
+						self.currentPage = self.maxPage;
+						break;
+					case 'refresh': 
+						if(typeof self.options.refreshCallback === 'function'){
+							self.options.refreshCallback();
+						}else{
+							self.setMaxPage(self.maxPage);
+						}
+						return;
+					default : 
+						break;
+				}
+			}
+				
+			self.updateInput(true);
+		});
+	};
+	//更新输入框
+	Plugin.prototype.updateInput  = function(isCallback){
+		if(this.currentPage < 1){
+				this.currentPage = 1;
+			}
+		if(this.currentPage > this.maxPage){
+			this.currentPage = this.maxPage;
+		}
+		this.$element.find('input').val(this.currentPage);
+		this.$element.find('[data-value=maxPage]').text(this.maxPage);
+
+		//更新样式
+		this.updateOper();
+
+		//回调
+		if(isCallback&&typeof this.options.selectCallback == 'function'){
+			this.options.selectCallback(this.currentPage);
+		}
+	};
+	//绑定输入框事件
+	Plugin.prototype.bindInput = function(){
+		var self = this;
+		var $input = this.$element.find('input');
+		$input.on({
+			'focus' : function(){
+				$input.select();
+			},
+			//捕捉回车键
+			'keydown' : function(e){
+				if(e.keyCode === 13){
+					$(this).blur();
+				}
+			},
+			'blur' : function(){
+				var value = $(this).val();
+				var page = parseInt(value,10);
+				//当前页保存有意义的数
+				self.currentPage = isNaN(page)?self.currentPage:page;
+				self.updateInput(true);
+			}
+		})
+	};
+	//支持 设置最大页面 外部使用方法
+	Plugin.prototype.setMaxPage = function(page){
+		this.maxPage = page;
+		this.updateInput(true);
+		return this;
+	};
+	Plugin.prototype.exec = function(methodName,config){
+		this[methodName](config);
+	}
+        //fn就是prototype
+        $.fn[pluginName] = function(options){
+
+	      //为了能支持传递字符串当方法使用，这里修改了模板
+              /*//each表示对多个元素调用，用return 是为了返回this，进行链式调用
+              return this.each(function(){
+                        //判断有没有插件名字 如果你不愿意加if 直接new就好了
+                        if(!$.data(this,'plugin_'+pluginName)){
+                                //生成插件类实例。
+                                $.data(this,'plugin_'+pluginName,new Plugin(this,options));
+                        }
+                });*/
+
+		var $this = $(this)
+
+		//把arguments对象，转化真正的数组
+		var args = [].slice.call(arguments,0);
+
+		//如果第一个参数是字符串，认为传进来的是方法
+		if (typeof args[0] === 'string') {
+			return $this.first().data('plugin_'+pluginName).exec(args[0],args[1]);
+		} else {
+			return this.each(function(){
+
+                        	//判断有没有插件名字 如果你不愿意加if 直接new就好了
+                        	if(!$.data(this,'plugin_'+pluginName)){
+
+                           		//生成插件类实例。
+                            		$.data(this,'plugin_'+pluginName,new Plugin(this,options));
+                         	}
+			});
+		}    			
+	}
+})(jQuery,window,document);
+</script>
+<script type="text/javascript">
+$(function(){
+	$('#pager').perfectPager({
+		currentPage	: 7,
+		maxPage	: 7,
+		selectCallback : function(active){
+			console.log(active);
+		}
+	});
+});
+</script>
+
+<style>
+*{
+	margin : 0;
+	padding : 0;
+}
+body{
+	margin : 20px;
+}
+.perfect-pager{
+	font-family : "微软雅黑";
+	font-size : 16px;
+	color : #555555;
+	line-height : 16px;
+}
+.perfect-pager a{
+	width : 18px;
+	height : 18px;
+	border : 1px solid #ffffff;
+}
+.perfect-pager a:hover{
+	border : 1px solid #aaaaaa;
+	cursor : pointer;
+}
+.perfect-pager span,
+.perfect-pager a,
+.perfect-pager input
+{
+	display : inline-block;
+	float : left;
+}
+.perfect-pager input{
+	width :32px;
+	border : 1px solid #555555;
+	text-align : center;
+	padding : 0 3px;
+}
+.perfect-pager .page-first{
+	background : #f00;
+}
+.perfect-pager .page-prev{
+	background : #0f0;
+}
+.perfect-pager .page-next{
+	background : #00f;
+}
+.perfect-pager .page-last{
+	background: #ff0;
+}
+.perfect-pager .page-first-disabled{
+	background : #fff;
+}
+.perfect-pager .page-prev-disabled{
+	background : #f0f;
+}
+.perfect-pager .page-next-disabled{
+	background : #aaa;
+}
+.perfect-pager .page-last-disabled{
+	background: #bbb;
+}
+.perfect-pager .page-first-disabled:hover,
+.perfect-pager .page-prev-disabled:hover,
+.perfect-pager .page-next-disabled:hover,
+.perfect-pager .page-last-disabled:hover
+{
+	border : 1px solid #ffffff;
+	cursor : default;
+}
+.perfect-pager .refresh{
+	background : #eee;
+}
+.perfect-pager .spite{
+	height : 16px;
+	width : 4px;
+	background : #ccc;
+}
+</style>
+</head>
+<body>
+	<div id="pager" class="perfect-pager"> 
+   <a title="首页" class="page-first" data-oper="page-first"></a> 
+   <a title="上一页" class="page-prev" data-oper="page-prev"></a> 
+   <span class="spite"></span> 
+   <span>第</span> 
+   <input type="text" /> 
+   <span>页,</span> 
+   <span>共</span> 
+   <span data-value="maxPage"></span> 
+   <span>页</span> 
+   <span class="spite"></span> 
+   <a title="下一页" class="page-next" data-oper="page-next"></a> 
+   <a title="尾页" class="page-last" data-oper="page-last"></a> 
+   <span class="spite"></span> 
+   <a title="刷新" class="refresh" data-oper="refresh"></a> 
+  </div> 
+</body>
+</html>

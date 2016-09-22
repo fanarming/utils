@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>title</title>
+<style>
+  .key-word {
+    color: #f00;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+  <p id="title">this is a test.this is a test</p>
+
+<script src="../js/jquery.min.js"></script>  
+<script>
+  $(function(){
+    var html = $('#title').html();
+    html = html.replace(/is/, '<span class="key-word">is</span>');
+    $('#title').html(html);
+  });
+    
+</script>
+</body>
+</html>
