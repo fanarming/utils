@@ -1,0 +1,341 @@
+@charset "utf-8";
+
+.gamemod {
+    width: 100%;
+    height: 818px;
+    background: url(../img/bg.jpg) ;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    display: block
+}
+.mainbtn {
+    position: absolute;
+    left: 50%;
+    margin-left: -255px;
+    background: url(../img/mainbubble.png);
+    display: block;
+    z-index: 1;
+    animation: show 5s infinite;
+    width: 546px;
+    height: 582px;
+}
+@keyframes show {
+    0% {
+        top:77px
+    }
+    25% {
+        top:85px
+    }
+    50% {
+        top:77px
+    }
+    75% {
+        top:65px
+    }
+    100% {
+        top:77px
+    }
+}
+.btn1 a, .btn2 a {
+    margin: 187px 0 0 120px;
+    background: url(../img/btn-1.png) no-repeat top left;
+    width: 283px;
+    height: 90px;
+    display: block;
+    text-indent: -999em;
+    border-radius: 30px
+}
+.btn1 a:active {
+    height: 75px;
+    margin: 202px 0 0 120px;
+}
+.btn2 a {
+    margin: 45px 0 0 120px;
+    background: url(../img/btn-2.png) no-repeat top left;
+}
+.btn2 a:active {
+    height: 75px;
+    margin: 60px 0 0 120px;
+}
+.fish1 {
+    display: block;
+    left: -200px;
+    width: 116px;
+    height: 100px;
+    position: absolute;
+    animation: move 15s infinite, show 3s infinite;
+    z-index: 1
+}
+.fish2 {
+    animation: move1 18s infinite, show 3s infinite;
+    right: -200px;
+    display: block;
+    position: absolute;
+    opacity:0.8;
+    width: 116px;
+    height: 100px;
+    top:0
+}
+.fish2 img {
+    width: 50%;
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+}
+.fisharea {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: 590px auto 0;
+    height:230px;
+}
+.fish3 {
+    display: block;
+    left: -200px;
+    width: 116px;
+    height: 100px;
+    position: absolute;
+    animation: move 20s infinite, show 2s infinite;
+    z-index: 1;
+    margin-top:50px;
+}
+.fish4 {
+    display: block;
+    left: -200px;
+    width: 116px;
+    height: 100px;
+    position: absolute;
+    animation: move 18s infinite, show 5s infinite;
+    z-index: 1;
+    margin-top:20px;
+}
+.fish5 {
+    animation: move1 16s infinite, show 5s infinite;
+    right: -200px;
+    display: block;
+    position: absolute;
+    opacity:0.9;
+    width: 116px;
+    height: 100px;
+    margin-top:10px;
+}
+.fish5 img{
+    width:80%;
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+}
+.fish6 {
+    animation: move 20s infinite, show 3s infinite;
+    left: -800px;
+    display: block;
+    position: absolute;
+    width: 116px;
+    height: 100px;
+    margin-top:70px;
+}
+.fish7 {
+    animation: move 17s infinite, show 8s infinite;
+    left: -50px;
+    display: block;
+    position: absolute;
+    width: 116px;
+    height: 100px;
+    margin-top:20px;
+}
+.fish8 {
+    animation: move1 20s infinite, show 3s infinite;
+    right: -200px;
+    display: block;
+    position: absolute;
+    width: 116px;
+    height: 100px;
+    margin-top:80px;
+}
+.fish8 img{
+    width:50%;
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+}
+@keyframes move {
+    0 {
+        left:-200px;
+    }
+    100% {
+        left:100%;
+    }
+}
+@keyframes move1 {
+    0 {
+        right:-200px;
+    }
+    100% {
+        right:100%;
+    }
+}
+
+.helpoverlay{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 9999;
+    display: none;
+}
+
+.helpoverlay.active{
+    display: block;
+}
+
+.window{
+    width: 730px;
+    height: 415px;
+    background: url(../img/window.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -365px;
+    top: 10%;
+}
+
+.tab-title{
+    font-size: 20px;
+    color: #fff;
+    font-weight: bolder;
+    text-shadow: 2px 2px 1px #01314c, -2px -2px 1px #01314c, 2px -2px 1px #01314c, -2px 2px 1px #01314c;
+    position: absolute;
+    left: 80px;
+    top: 30px;
+}
+
+.helpoverlay_close{
+    width: 61px;
+    height: 65px;
+    background: url(../img/x.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: -25px;
+}
+
+.window-content{
+    width: 569px;
+    height: 334px;
+    background: url(../img/window-content-bg.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    display: block;
+    cursor: pointer;
+    position: relative;
+    left: 15px;
+    bottom: -65px;
+}
+
+.buttons{
+    position: absolute;
+    right: 15px;
+    bottom: 0;
+    width: 120px;
+}
+
+.buttons ul{
+    padding: 0;
+}
+
+.button{
+    width: 115px;
+    height: 49px;
+    background: url(../img/tab-button.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    display: block;
+    cursor: pointer;
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+    color: #212121;
+    font-weight: bolder;
+    text-shadow: 2px 2px 1px #00a1dd, -2px -2px 1px #00a1dd, 2px -2px 1px #00a1dd, -2px 2px 1px #00a1dd;
+}
+
+.button:hover{
+    font-size: 22px;
+}
+
+.button.active{
+    width: 140px;
+    height: 49px;
+    background: url(../img/tab-button-active.png);
+    margin-left: -25px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 2px 2px 1px #f6c200, -2px -2px 1px #f6c200, 2px -2px 1px #f6c200, -2px 2px 1px #f6c200;
+    padding-left: 5px;
+    box-sizing: border-box;
+}
+
+.button.active:hover{
+    font-size: 20px;
+}
+
+.content-pic{
+    width: 569px;
+    height: 334px;
+    display: none;
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    transition: all .4s ease-in-out;
+}
+
+.one{
+    background: url(../img/content-5.png);
+    background-size: 100% 100%;
+    background-position: center center;
+}
+
+.two{
+    background: url(../img/content-1.jpg);
+    background-size: 100% 100%;
+    background-position: center center;
+}
+
+.three{
+    background: url(../img/content-2.png);
+    background-size: 100% 100%;
+    background-position: center center;
+}
+
+.four{
+    background: url(../img/content-3.png);
+    background-size: 100% 100%;
+    background-position: center center;
+}
+
+.five{
+    background: url(../img/content-4.png);
+    background-size: 100% 100%;
+    background-position: center center;
+}
+
+.content-pic.active{
+    display: block;
+    transition: all .4s ease-in-out;
+}
