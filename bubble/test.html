@@ -99,6 +99,25 @@
 	        SoapBubbleMachineNumber1.addBubbles(60);
 	        SoapBubbleMachineNumber2.addBubbles(3);
 	        SoapBubbleMachineNumber3.addBubbles(50);
+
+
+	   
+	        $('.btn2').click(function () {
+	            $('.helpoverlay').addClass('active');
+	        });
+
+	        $('.helpoverlay_close').click(function () {
+	            $('.helpoverlay').removeClass('active');
+	        });
+
+	        $('.button').click(function () {
+	            $('.button').removeClass('active');
+	            $(this).addClass('active');
+	            var bID = $(this).attr('id')
+	            $('.content-pic').removeClass('active');
+	            $("." + bID).addClass('active');
+	        });	    
+
 	    });
 	</script>
 </body>
