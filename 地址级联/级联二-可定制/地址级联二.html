@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>地址级联</title>
+	<style>
+		* { 
+			margin: 0;
+			padding: 0;
+			text-decoration: none;	
+			overflow-x: hidden;							
+		}
+
+		#wrapper {
+			margin: 50px auto;
+			width: 500px;
+		}
+
+		select {
+			width: 100px;
+			margin-right: 30px;		
+		}
+
+		
+	</style>	
+</head>
+<body>
+	<div id="wrapper">
+        <select class="prov"></select>
+        <select class="city" disabled="disabled"></select>
+        <select class="dist" disabled="disabled"></select>
+        <select class="manager" disabled="disabled"></select>
+	</div>	
+
+	<script src="../../js/jquery.min.js"></script>	
+	<script src="./city.min.js"></script>	
+	<script src="./jquery.cityselect.js"></script>	
+	<script>
+		$(function(){
+			$("#wrapper").citySelect({nodata:"none",required:false}); 
+		});
+		
+	</script>	
+</body>
+</html>

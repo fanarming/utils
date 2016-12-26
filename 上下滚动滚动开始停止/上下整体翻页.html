@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>上下翻页</title>
+	<style>
+		* { 
+			margin: 0;
+			padding: 0;
+			text-decoration: none;	
+			overflow-x: hidden;							
+		}
+
+		#wrapper {
+			position: fixed;
+			top: 0;
+			width: 100%;
+		}
+
+		section {
+			width: 100%;
+			text-align: center;	
+			margin-right: -20px;		
+		}
+
+		.part1 {
+			background: rgba(0, 255, 0, .3);
+		}
+
+		.part2 {
+			background: rgba(255, 0, 0, .3);
+		}
+
+		.part3 {
+			background: rgba(0, 0, 255, .3);
+		}
+	</style>
+	<script src="../js/jquery.min.js"></script>
+	<script src="scroll-js.js"></script>	
+</head>
+<body>
+	<div id="wrapper">
+		<section class="part1">1</section>	
+		<section class="part2">2</section>	
+		<section class="part3">3</section>	
+	</div>	
+	<script>
+	$(function(){
+		$(window).scroll(function(event) {
+            /* Act on the event */
+            $footer.slideUp(400,function(){                            
+                $footer.hide();
+            });
+           
+        }); 
+
+        $(window).bind('scrollstart', function(){
+            $footer.slideUp(400, function(){
+                $footer.hide();
+            }); 
+        });
+     
+        $(window).bind('scrollstop', function(){
+            $footer.slideDown(400);
+        });
+	})
+	</script>
+</body>
+</html>

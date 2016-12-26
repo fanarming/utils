@@ -29,7 +29,12 @@
 	<script src="load_cities.js"></script>	
 	<script>
 		$(function(){		
-			$("#wrapper").loadCities();
+			$("#wrapper").loadCities({
+				province:13,
+				prodefault:true,
+				city:1302,
+				citydefault:true
+			});
 		});
 		
 	</script>	
