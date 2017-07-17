@@ -39,7 +39,10 @@ var fss;
 $(function() {
 	fss = new ddfullscreenslider({
 		sliderid: 'dowebok',
-		addHash: false
+		addHash: false,
+		onslide: function($slide, index) {
+			alert('滚动到了第 ' + (index + 1) + ' 屏')
+		}
 	});
 });
 </script>
