@@ -2,11 +2,50 @@
 <html>
 <head>
 <title>图片上传预览</title>
+<style>
+	button {
+		width: 100px;
+		height: 50px;
+		line-height: 50px;
+	}
+</style>
 <script src="../js/jquery.min.js" type="text/javascript"></script>
 <script src="./upload_img_preview.js" type="text/javascript"></script>
 <script>
 $(function () {
 $("#up").uploadPreview({ Img: "ImgPr", Width: 120, Height: 120 });
+$('#upfile').on('change',function(){
+	
+	var ab = getPath(document.getElementById("upfile"));
+
+	console.log(ab);
+})
+
+$('.button').on('click', function(){
+	abc();
+})
+
+function abc(){
+	var imgUrl = $('#ImgPr').attr('src');
+
+	$('#show').attr('src',imgUrl);
+}
+
+ function getPath(obj) {
+    if (obj) {
+        if (window.navigator.userAgent.indexOf("MSIE") >= 1) {
+            obj.select(); return document.selection.createRange().text;
+        }
+        else if (window.navigator.userAgent.indexOf("Firefox") >= 1) {
+            if (obj.files) {
+                return obj.files.item(0).getAsDataURL();
+            }
+            return obj.value;
+        }
+        return obj.value;
+    }
+} 
+//参数obj为input file对象 
 });
 </script>
 </head>
@@ -17,6 +56,8 @@ $("#up").uploadPreview({ Img: "ImgPr", Width: 120, Height: 120 });
 <div><img id="ImgPr" width="120" height="120" /></div>
 <input type="file" id="up" />
 </div>
+<img id="show" src="" alt="">
+<button class="button">点击</button>
 
 </body>
 </html>

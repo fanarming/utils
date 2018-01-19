@@ -43,7 +43,7 @@
         var city_json;
 
         // 赋值市级函数
-        var cityStart = function() {
+        var cityStart = function(city) {
             var prov_id = prov_obj.get(0).selectedIndex;
             if (!settings.required) {
                 prov_id--;
@@ -51,14 +51,17 @@
             ;
             city_obj.empty().attr("disabled", true);
             dist_obj.empty().attr("disabled", true);
+            manager_obj.empty().attr("disabled", true);
 
             if (prov_id < 0 || typeof (city_json.citylist[prov_id].c) == "undefined") {
                 if (settings.nodata == "none") {
                     city_obj.css("display", "none");
                     dist_obj.css("display", "none");
+                    manager_obj.css("display", "none");
                 } else if (settings.nodata == "hidden") {
                     city_obj.css("visibility", "hidden");
                     dist_obj.css("visibility", "hidden");
+                    manager_obj.css("visibility", "hidden");
                 }
                 ;
 
@@ -72,7 +75,7 @@
                 temp_html += "<option value='" + city.n + "'>" + city.n + "</option>";
             });
             city_obj.html(temp_html).attr("disabled", false).css({"display": "", "visibility": ""});
-            distStart();
+            distStart(city);
         };
 
         // 赋值地区（县）函数
@@ -95,7 +98,7 @@
                 }
                 ;               
 
-                managerStart(distr);
+                //managerStart(distr);
 
                 return;
             }
@@ -114,12 +117,12 @@
         var managerStart = function(distr) {
             var prov_id = prov_obj.get(0).selectedIndex;
             var city_id = city_obj.get(0).selectedIndex;
-            var manager_id = manager_obj.get(0).selectedIndex;
+            /*var manager_id = manager_obj.get(0).selectedIndex;*/
             var flag = true;
             if (!settings.required) {
                 prov_id--;
                 city_id--;
-                manager_id--;
+                /*manager_id--;*/
             }
             ;
             manager_obj.empty().attr("disabled", true);
@@ -127,7 +130,7 @@
             if (prov_id < 0 || city_id < 0 || typeof (city_json.citylist[prov_id].c[city_id].a) == "undefined") {
                 if (settings.nodata == "none") {
                     //manager_obj.css("display", "none");
-                    //manager_obj.css("disabled", true);
+                    manager_obj.css("disabled", true);
                 } else if (settings.nodata == "hidden") {
                     manager_obj.css("visibility", "hidden");
                 }
@@ -183,7 +186,7 @@
                             setTimeout(function() {
                                 if (settings.dist != null) {
                                     dist_obj.val(settings.dist);
-                                    managerStart(settings.dist);
+                                    managerStart();
                                 }
                                 ;
                             }, 1);
@@ -196,7 +199,7 @@
 
             // 选择省份时发生事件
             prov_obj.bind("change", function() {
-                cityStart();
+                cityStart($(this).val());
             });
 
             // 选择市级时发生事件

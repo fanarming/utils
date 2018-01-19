@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="author" content="Arming">
+	<title>上传附件大小限制</title>	
+	<script src="../js/jquery.min.js"></script>		
+	<script src="./uploadSize.js"></script>		
+</head>
+<body>
+	<div id="wrapper">
+		<input id="upload" type="file"/>	
+	</div>	
+
+	<script>
+		$(function(){
+			$('#upload').uploadSizeLimit({
+				'maxSize': 2000,   //附件最大大小，1000为1M
+				'type': "jpg,png",  //附件类型
+				'sizeTips': "文件大小不能超过500Kb",  //附件超过大小限制的提示信息
+				'typeTips': "文件格式只能为jpg,png"   //附件格式错误的提示信息
+			});			
+		})		
+	</script>
+</body>
+</html>

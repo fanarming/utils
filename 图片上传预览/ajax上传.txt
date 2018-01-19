@@ -1,0 +1,18 @@
+https://segmentfault.com/q/1010000006227332/a-1020000006227421
+
+
+var converImgTobase64 = function(url, callback, outputFormat) {
+        var canvas = document.createElement('CANVAS'),
+        ctx = canvas.getContext('2d'),
+            img = new Image;
+        img.crossOrigin = 'Anonymous';
+        img.onload = function(){
+            canvas.height = img.height;
+            canvas.width = img.width;
+            ctx.drawImage(img,0,0);
+            var dataURL = canvas.toDataURL(outputFormat || 'image/png');
+            callback.call(this, dataURL);
+            canvas = null; 
+        };
+        img.src = url;
+    }

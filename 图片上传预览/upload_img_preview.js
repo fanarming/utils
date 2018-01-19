@@ -65,6 +65,7 @@ jQuery.fn.extend({
                 } else {
                     $("#" + opts.Img).attr('src', _self.getObjectURL(this.files[0]))
                 }
+                
                 opts.Callback()
             }
         })
